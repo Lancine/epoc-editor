@@ -481,6 +481,9 @@ function searchInObject(obj, id, linkedPages, filename) {
  */
 const getAssetType = function (filename) {
     const mimeType = mime.lookup(filename);
+    if (!mimeType) return 'unknown';
+
+    if (mimeType === 'application/pdf') return 'pdf';
 
     return mimeType.split('/')[0] ?? 'unknown';
 };
