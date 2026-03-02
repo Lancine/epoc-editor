@@ -296,6 +296,18 @@ const setupIpcListener = function (targetWindow, setupMenu) {
             shell.openPath(store.state.projects[targetWindow.id].workdir);
         }),
     );
+
+    ipcMain.on(
+        'openAsset',
+        ipcGuard(async (_event, assetName) => {
+            const workdir = store.state.projects[targetWindow.id].workdir;
+            const assetsPath = path.join(workdir, 'assets');
+            const assetPath = path.normalize(path.join(assetsPath, assetName));
+
+            if (!assetPath.startsWith(assetsPath)) return;
+            shell.openPath(assetPath);
+        }),
+    );
 };
 
 const sendToFrontend = function (webContents, channel, data) {

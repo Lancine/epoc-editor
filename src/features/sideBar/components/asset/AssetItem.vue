@@ -3,8 +3,11 @@ import { default as DropdownMenu, type MenuItem } from '@/src/components/ui/UiDr
 import { goToElement } from '@/src/shared/services';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
+import { ApiInterface } from '@/src/shared/interfaces/api.interface';
 
 const { t } = useI18n();
+
+declare const api: ApiInterface;
 
 const props = defineProps<{
     asset: {
@@ -20,6 +23,13 @@ const emit = defineEmits<{
 
 const items: MenuItem[][] = [
     [
+        {
+            label: t('global.open'),
+            icon: 'icon-arrow-up-right',
+            onClick: () => {
+                api.send('openAsset', props.asset.filename);
+            },
+        },
         {
             label: t('assets.goto'),
             icon: 'icon-arrow-up-right',
@@ -48,8 +58,12 @@ const items: MenuItem[][] = [
     <div class="asset-item">
         <div class="asset-preview">
             <img v-if="asset.type === 'image'" :src="`assets://assets/${asset.filename}`" />
-            <video v-else-if="asset.type === 'application'" :src="`assets://assets/${asset.filename}`" controls />
+            <video v-else-if="asset.type === 'video'" :src="`assets://assets/${asset.filename}`" controls />
             <audio v-else-if="asset.type === 'audio'" :src="`assets://assets/${asset.filename}`" controls />
+            <div v-else-if="asset.type === 'pdf'" class="file-preview">
+                <i class="icon-fichier"></i>
+                <button class="btn btn-outline" @click="api.send('openAsset', asset.filename)">{{ t('global.open') }} PDF</button>
+            </div>
             <div v-else-if="asset.type === 'text'" class="file-preview">
                 <i class="icon-fichier"></i>
             </div>
