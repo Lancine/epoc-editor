@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
+import PdfPreview from './PdfPreview.vue';
 import { graphService } from '@/src/shared/services';
 import { getCurrentState } from '@/src/shared/services/undoRedo.service';
 
@@ -24,6 +25,7 @@ const filetype = computed(() => {
     if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp'].includes(ext)) return 'img';
     if (['mp4', 'm4v'].includes(ext)) return 'video';
     if (['mp3'].includes(ext)) return 'audio';
+    if (['pdf'].includes(ext)) return 'pdf';
     return null;
 });
 
@@ -83,6 +85,7 @@ let savedState = '';
             <img v-if="filetype === 'img'" :src="'assets://' + url" :alt="label" />
             <video v-if="filetype === 'video'" :src="'assets://' + url" controls></video>
             <audio v-if="filetype === 'audio'" :src="'assets://' + url" controls></audio>
+            <PdfPreview v-if="filetype === 'pdf'" :src="url" />
         </div>
     </div>
     <div v-if="!url">
