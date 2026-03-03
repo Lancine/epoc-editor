@@ -54,15 +54,15 @@ const template = `
     <p></p>
 `;
 
-const standardPlugins = 'image link lists template code table';
+const standardPlugins = 'accordion anchor image link lists media pagebreak preview template code table';
 // noinspection SpellCheckingInspection
 const standardToolbar =
-    'link image bullist numlist outdent indent template code table | bold italic strikethrough alignleft aligncenter alignright ';
+    'accordion anchor link image media bullist numlist outdent indent pagebreak preview template code table | bold italic strikethrough alignleft aligncenter alignright ';
 const textToolbar = 'bold italic link bullist numlist';
 const textPlugins = 'link lists code';
 
-const inlinePlugins = 'image link';
-const inlineToolbar = 'link image bold italic strikethrough ';
+const inlinePlugins = 'anchor image link media pagebreak preview';
+const inlineToolbar = 'anchor link image media pagebreak preview bold italic strikethrough ';
 
 const standardOptions = {
     menubar: false,
@@ -74,6 +74,7 @@ const standardOptions = {
     file_picker_callback: handleFilePicker,
     link_default_target: '_blank',
     link_target_list: false,
+    pagebreak_split_block: true,
     paste_data_images: true,
     paste_preprocess: (editor, args) => {
         args.content = args.content.replace(/font-family:[^;"]+;?/gi, '');
@@ -98,6 +99,7 @@ const inlineOptions = {
     file_picker_callback: handleFilePicker,
     link_default_target: '_blank',
     link_target_list: false,
+    pagebreak_split_block: true,
     paste_data_images: true,
     paste_preprocess: (editor, args) => {
         args.content = args.content.replace(/font-family:[^;"]+;?/gi, '');
